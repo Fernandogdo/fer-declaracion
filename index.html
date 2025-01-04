@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi novia?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom, #f0f4f8, #ffffff);
+        }
+
+        h1 {
+            color: #1AC71A;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            max-width: 600px;
+            color: #333;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: #1AC71A;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #148c10;
+        }
+
+        #monkey {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 150px;
+            height: auto;
+            transform: rotate(10deg);
+            z-index: 10;
+        }
+
+        .collage {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            max-width: 1200px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .collage img, .collage video {
+            width: 100%;
+            height: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .collage img:hover, .collage video:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.5);
+        }
+
+        .modal video {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.5);
+        }
+
+        .modal .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        #intro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        #collage {
+            display: none;
+        }
+
+        #infoScreen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        #contractModal .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        #contractModal .modal-content h2 {
+            margin-top: 0;
+            color: #1AC71A;
+        }
+
+        #contractModal .modal-content p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #rejectContract {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        #rejectContract:hover {
+            background-color: #c9302c;
+        }
+
+        @media (max-width: 768px) {
+            .collage {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+
+            .modal .close {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .collage {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 8px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+     <!-- Monito -->
+     <img id="monkey" src="./Fer/mono_colgando.png" alt="Monito colgando">
+
+     <!-- Introducción -->
+     <div id="intro">
+         <h1>Hola pequeña ❤️</h1>
+         <p>
+             He preparado algo especial para ti, lleno de momentos y recuerdos que me hacen feliz cada vez que los veo. Espero que lo disfrutes tanto como yo disfruté creándolo para ti.
+         </p>
+         <button onclick="showCollage()">Si eres sapa, continua 💚</button>
+     </div>
+
+    <!-- Collage -->
+    <div id="collage">
+        <h1>Un collage especial para ti 🐶❤️</h1>
+        <div class="collage">
+            <img src="./Fer/ella_durmiendo_yo.jpg" alt="Ella durmiendo" onclick="openModal(this)">
+            <img src="./Fer/ella_durmiendo_yo2.jpg" alt="Ella durmiendo 2" onclick="openModal(this)">
+            <img src="./Fer/ella_ojos_cerrados.jpg" alt="Ella ojos cerrados" onclick="openModal(this)">
+            <img src="./Fer/ella_snowy.jpg" alt="Ella con Snowy" onclick="openModal(this)">
+            <img src="./Fer/ella_snowy2.jpg" alt="Ella y Snowy 2" onclick="openModal(this)">
+            <img src="./Fer/ella_snowy3.jpg" alt="Ella y Snowy 3" onclick="openModal(this)">
+            <img src="./Fer/ella_snowy4.jpg" alt="Ella y Snowy 4" onclick="openModal(this)">
+            <img src="./Fer/ella_snowy5.jpg" alt="Ella y Snowy 5" onclick="openModal(this)">
+            <img src="./Fer/ella_snowy6.jpg" alt="Ella y Snowy 6" onclick="openModal(this)">
+            <video src="./Fer/ella_manejando.mp4" controls autoplay muted loop onclick="openModal(this)"></video>
+            <img src="./Fer/ella_snowy7.jpg" alt="Ella y Snowy 7" onclick="openModal(this)">
+            <img src="./Fer/ella_snowy8.jpg" alt="Ella y Snowy 8" onclick="openModal(this)">
+            <img src="./Fer/ella_snowy9.jpg" alt="Ella y Snowy 9" onclick="openModal(this)">
+            <img src="./Fer/ella_snowy10.jpg" alt="Ella y Snowy 10" onclick="openModal(this)">
+            <img src="./Fer/ella_yo.jpg" alt="Ella y yo" onclick="openModal(this)">
+            <img src="./Fer/shimpali_yo_atras.jpg" alt="Shimpali y yo atrás" onclick="openModal(this)">
+            <img src="./Fer/shimpali.png" alt="Shimpali" onclick="openModal(this)">
+            <img src="./Fer/snowy_solo.jpg" alt="Snowy solo" onclick="openModal(this)">
+            <img src="./Fer/yo_ella_columpio.jpg" alt="Yo, ella y el columpio" onclick="openModal(this)">
+            <img src="./Fer/yo_ella_snowy.jpg" alt="Yo, ella y Snowy" onclick="openModal(this)">
+        </div>
+        <button onclick="showInfoScreen()">Continuar 💕</button>
+    </div>
+
+    <!-- Pantalla de Información -->
+    <div id="infoScreen">
+        <h1>Información importante</h1>
+        <p>Antes de continuar, lee este contrato especial ❤️</p>
+        <button onclick="openContractModal()">Información</button>
+    </div>
+
+    <!-- Contrato Modal -->
+    <div id="contractModal" class="modal">
+      <div class="modal-content">
+          <h2>Contrato de relación ❤️</h2>
+          <p>
+              <b>Este contrato simboliza nuestro compromiso mutuo de construir una relación sólida y feliz.</b>
+          </p>
+          <p>
+              <b>Lealtad:</b> Prometemos ser siempre leales el uno al otro, manteniendo la confianza como base de nuestra relación.
+          </p>
+          <p>
+              <b>Respeto:</b> Nos comprometemos a respetar nuestras diferencias, nuestras decisiones y, sobre todo, a tratarnos con dignidad en todo momento.
+          </p>
+          <p>
+              <b>Amor:</b> Nuestro amor será sincero, genuino y siempre buscará el bienestar mutuo, superando cualquier obstáculo que se presente.
+          </p>
+          <p>
+              <b>Intimidad:</b> Nos aseguraremos de mantener viva la chispa en nuestra relación, compartiendo momentos únicos de conexión y pasión. Me encantan tus nalgas y tetas, adoptame para que me las des todos los días 🥰
+          </p>
+          <p>
+              <b>Comunicación:</b> Hablaremos siempre con honestidad, expresando nuestras necesidades, sentimientos y pensamientos sin temor a ser juzgados.
+          </p>
+          <p>
+              <b>Apoyo:</b> Seremos el mayor soporte el uno para el otro, celebrando los logros y enfrentando juntos los desafíos de la vida.
+          </p>
+          <p>
+              <b>Por aceptar este contrato, nos unimos en un pacto de amor, lealtad y felicidad mutua.</b>
+          </p>
+          <p>
+            <b>¿Quieres ser mi novia? ❤️</b>
+        </p>
+          <button onclick="acceptContract()">Aceptar contrato 💚</button>
+          <button id="rejectContract" onmouseover="avoidRejection()">Rechazar contrato 💔</button>
+      </div>
+    </div>
+
+    <!-- Modal para visualizar imágenes -->
+    <div id="modal" class="modal" onclick="closeModal(event)">
+        <span class="close" onclick="closeModal(event)">&times;</span>
+        <img id="modalContent" src="" alt="">
+    </div>
+
+    <script>
+        function showCollage() {
+            document.getElementById("intro").style.display = "none";
+            document.getElementById("collage").style.display = "block";
+        }
+
+        function showInfoScreen() {
+            document.getElementById("collage").style.display = "none";
+            document.getElementById("infoScreen").style.display = "flex";
+        }
+
+        function openContractModal() {
+            document.getElementById("contractModal").style.display = "flex";
+        }
+
+        function closeModal(event) {
+            const modal = document.getElementById("modal");
+            if (event.target === modal || event.target.classList.contains("close")) {
+                modal.style.display = "none";
+            }
+        }
+
+        function openModal(element) {
+            const modal = document.getElementById("modal");
+            const modalContent = document.getElementById("modalContent");
+
+            if (element.tagName === "VIDEO") {
+                modalContent.outerHTML = `<video id="modalContent" src="${element.src}" controls autoplay muted loop></video>`;
+            } else {
+                modalContent.outerHTML = `<img id="modalContent" src="${element.src}" alt="">`;
+            }
+
+            modal.style.display = "flex";
+        }
+
+        function acceptContract() {
+            alert("¡Me haces la persona más feliz del mundo! ❤️");
+            window.location.href = "tequiero.html";
+        }
+
+        function avoidRejection() {
+            const button = document.getElementById("rejectContract");
+            button.style.position = "absolute";
+            button.style.top = Math.random() * window.innerHeight + "px";
+            button.style.left = Math.random() * window.innerWidth + "px";
+        }
+    </script>
+</body>
+</html>
