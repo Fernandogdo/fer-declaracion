@@ -16,10 +16,10 @@
             background: linear-gradient(to bottom, #f0f4f8, #ffffff);
         }
 
-        h1 {
+        h1, h2 {
             color: #1AC71A;
             text-align: center;
-            margin-top: 20px;
+            margin: 20px 0;
         }
 
         p {
@@ -27,6 +27,7 @@
             max-width: 600px;
             color: #333;
             text-align: center;
+            margin: 10px 0;
         }
 
         button {
@@ -50,7 +51,7 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            width: 150px;
+            width: 100px;
             height: auto;
             transform: rotate(10deg);
             z-index: 10;
@@ -58,11 +59,11 @@
 
         .collage {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 15px;
             padding: 20px;
-            max-width: 1200px;
-            width: 100%;
+            max-width: 100%;
+            width: 90%;
             box-sizing: border-box;
         }
 
@@ -80,7 +81,24 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
 
-        .modal {
+        #intro, #collage, #infoScreen, #contractScreen, #rejectionScreen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        #intro.active, #collage.active, #infoScreen.active, #contractScreen.active, #rejectionScreen.active {
+            display: flex;
+        }
+
+
+        #modal {
             display: none;
             position: fixed;
             top: 0;
@@ -91,24 +109,16 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            box-sizing: border-box;
         }
 
-        .modal img {
+        #modal img, #modal video {
             max-width: 90%;
             max-height: 90%;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(255, 255, 255, 0.5);
         }
 
-        .modal video {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.5);
-        }
-
-        .modal .close {
+        #modal .close {
             position: absolute;
             top: 20px;
             right: 20px;
@@ -118,55 +128,14 @@
             z-index: 1001;
         }
 
-        #intro {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        #collage {
-            display: none;
-        }
-
-        #infoScreen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        #contractModal .modal-content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 90%;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        #contractModal .modal-content h2 {
-            margin-top: 0;
-            color: #1AC71A;
-        }
-
-        #contractModal .modal-content p {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
         #rejectContract {
             background-color: #d9534f;
             color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         #rejectContract:hover {
@@ -174,12 +143,16 @@
         }
 
         @media (max-width: 768px) {
+            #monkey {
+                width: 80px;
+            }
+
             .collage {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
                 gap: 10px;
             }
 
-            h1 {
+            h1, h2 {
                 font-size: 24px;
             }
 
@@ -191,19 +164,15 @@
                 font-size: 16px;
                 padding: 10px 20px;
             }
-
-            .modal .close {
-                font-size: 24px;
-            }
         }
 
         @media (max-width: 480px) {
             .collage {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
                 gap: 8px;
             }
 
-            h1 {
+            h1, h2 {
                 font-size: 20px;
             }
 
@@ -223,13 +192,13 @@
      <img id="monkey" src="./Fer/mono_colgando.png" alt="Monito colgando">
 
      <!-- Introducción -->
-     <div id="intro">
-         <h1>Hola pequeña ❤️</h1>
-         <p>
-             He preparado algo especial para ti, lleno de momentos y recuerdos que me hacen feliz cada vez que los veo. Espero que lo disfrutes tanto como yo disfruté creándolo para ti.
-         </p>
-         <button onclick="showCollage()">Si eres sapa, continua 💚</button>
-     </div>
+    <div id="intro" class="active">
+        <h1>Hola pequeña ❤️</h1>
+        <p>
+            He preparado algo especial para ti, lleno de momentos y recuerdos que me hacen feliz cada vez que los veo. Espero que lo disfrutes tanto como yo disfruté creándolo para ti.
+        </p>
+        <button onclick="showScreen('collage')">Si eres sapa, continua 💚</button>
+    </div>
 
     <!-- Collage -->
     <div id="collage">
@@ -256,19 +225,19 @@
             <img src="./Fer/yo_ella_columpio.jpg" alt="Yo, ella y el columpio" onclick="openModal(this)">
             <img src="./Fer/yo_ella_snowy.jpg" alt="Yo, ella y Snowy" onclick="openModal(this)">
         </div>
-        <button onclick="showInfoScreen()">Continuar 💕</button>
+        <p>Eres la mujer más hermosa, como hermosos son los momentos que he pasado contigo</p>
+        <button onclick="showScreen('infoScreen')">Continuar 💕</button>
     </div>
 
-    <!-- Pantalla de Información -->
-    <div id="infoScreen">
+     <!-- Pantalla de Información -->
+     <div id="infoScreen">
         <h1>Información importante</h1>
         <p>Antes de continuar, lee este contrato especial ❤️</p>
-        <button onclick="openContractModal()">Información</button>
+        <button onclick="showScreen('contractScreen')">Información</button>
     </div>
 
     <!-- Contrato Modal -->
-    <div id="contractModal" class="modal">
-      <div class="modal-content">
+    <div id="contractScreen">
           <h2>Contrato de relación ❤️</h2>
           <p>
               <b>Este contrato simboliza nuestro compromiso mutuo de construir una relación sólida y feliz.</b>
@@ -297,9 +266,13 @@
           <p>
             <b>¿Quieres ser mi novia? ❤️</b>
         </p>
-          <button onclick="acceptContract()">Aceptar contrato 💚</button>
-          <button id="rejectContract" onmouseover="avoidRejection()">Rechazar contrato 💔</button>
-      </div>
+          <button onclick="acceptContract()">Aceptar  💚</button>
+          <button id="rejectContract" onmouseover="avoidRejection()">Rechazar 💔</button>
+    </div>
+
+     <!-- Pantalla de rechazo -->
+     <div id="rejectionScreen">
+        <h1>No vale esta huevada 😢</h1>
     </div>
 
     <!-- Modal para visualizar imágenes -->
@@ -309,19 +282,14 @@
     </div>
 
     <script>
-        function showCollage() {
-            document.getElementById("intro").style.display = "none";
-            document.getElementById("collage").style.display = "block";
+        let rejectionAttempts = 0;
+
+        function showScreen(screenId) {
+            const screens = document.querySelectorAll('#intro, #collage, #infoScreen, #contractScreen, #rejectionScreen');
+            screens.forEach(screen => screen.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
         }
 
-        function showInfoScreen() {
-            document.getElementById("collage").style.display = "none";
-            document.getElementById("infoScreen").style.display = "flex";
-        }
-
-        function openContractModal() {
-            document.getElementById("contractModal").style.display = "flex";
-        }
 
         function closeModal(event) {
             const modal = document.getElementById("modal");
@@ -349,10 +317,16 @@
         }
 
         function avoidRejection() {
+            rejectionAttempts++;
             const button = document.getElementById("rejectContract");
-            button.style.position = "absolute";
-            button.style.top = Math.random() * window.innerHeight + "px";
-            button.style.left = Math.random() * window.innerWidth + "px";
+
+            if (rejectionAttempts < 3) {
+                button.style.position = "absolute";
+                button.style.top = Math.random() * (window.innerHeight - 50) + "px";
+                button.style.left = Math.random() * (window.innerWidth - 100) + "px";
+            } else {
+                button.onclick = () => showScreen('rejectionScreen');
+            }
         }
     </script>
 </body>
